@@ -15,7 +15,9 @@ io.on('connection', function(socket){
     console.log('User disconnected');
     socket.broadcast.emit('user left', {
       username: socket.username });
-    connectedUsers.splice(connectedUsers.indexOf(socket.username), 1);
+    if (connectedUsers.indexOf(socket.username) !== -1) {
+      connectedUsers.splice(connectedUsers.indexOf(socket.username), 1);
+    }
     updateUserList();
   });
 
