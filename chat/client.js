@@ -34,12 +34,14 @@ $(function() {
 
   // Socket receives new message and displays it
   socket.on('send msg', function(msg) {
+    // Allows < > around user name without converting it into an HTML element
+    var displayName = `<${ msg.author }>`.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     // Prevents html injection and allows multiple spaces in message
     var messageWithSpace = msg.message.split('<br />').join('\n')
                             .split(' ').join('\xa0')
                             .replace(/</g, "&lt;").replace(/>/g, "&gt;");
     var messageLi = $("<li>", {"class": "chatMessage"});
-    messageLi.html(`[${ msg.timestamp }] <${ msg.author }> : ${ messageWithSpace }`)
+    messageLi.html(`[${ msg.timestamp }] ${ displayName } : ${ messageWithSpace }`)
     $('#messages').append(messageLi);
 
     chatScroll();
