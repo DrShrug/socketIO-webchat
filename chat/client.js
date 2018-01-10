@@ -35,9 +35,11 @@ $(function() {
   // Socket receives new message and displays it
   socket.on('send msg', function(msg) {
     // Prevents html injection and allows multiple spaces in message
-    var messageWithSpace = msg.message.split(' ').join('\xa0');
+    var messageWithSpace = msg.message.split('<br />').join('\n')
+                            .split(' ').join('\xa0')
+                            .replace(/</g, "&lt;").replace(/>/g, "&gt;");
     var messageLi = $("<li>", {"class": "chatMessage"});
-    messageLi.text(`[${ msg.timestamp }] ${ msg.author } : ${ messageWithSpace }`)
+    messageLi.html(`[${ msg.timestamp }] <${ msg.author }> : ${ messageWithSpace }`)
     $('#messages').append(messageLi);
 
     chatScroll();
@@ -106,7 +108,7 @@ $(function() {
       var formatedDate = `${ currentTime.getDate() } ${ getMonthFromNumber(currentTime.getMonth()) } ${ currentTime.getFullYear() } - ${ currentTime.getHours() }:${ minuteDigits }`;
       var message = {
         author: username,
-        message: $('#messagebox').val().substring(0, 240).replace(/\r?\n/g, '<br />'),
+        message: $('#messagebox').val().substring(0, 500).replace(/\r?\n/g, '<br />'),
         timestamp: formatedDate
       }
       socket.emit('send msg', message);
