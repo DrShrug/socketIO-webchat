@@ -32,13 +32,17 @@ $(function() {
         $("#nameselected").click();
   });
 
-  // Socket on
   // Socket receives new message and displays it
   socket.on('send msg', function(msg) {
-    $('#messages').append(`<li class="chatMessage">[${ msg.timestamp }] ${ msg.author } : ${ msg.message }</li>`);
+    // Prevents html injection and allows multiple spaces in message
+    var messageWithSpace = msg.message.split(' ').join('\xa0');
+    var messageLi = $("<li>", {"class": "chatMessage"});
+    messageLi.text(`[${ msg.timestamp }] ${ msg.author } : ${ messageWithSpace }`)
+    $('#messages').append(messageLi);
+
     chatScroll();
     if (!document.hasFocus() && username !== null) {
-      document.title = 'Web chat [!]'
+      document.title = '[New] Web Chat App'
     }
   });
 
@@ -64,7 +68,7 @@ $(function() {
 
   // Removes new message notification
   $(window).focus(function () {
-    document.title = 'Web chat';
+    document.title = 'Web Chat App';
   });
 
   // Sets the list of connected users
@@ -88,13 +92,15 @@ $(function() {
     }
   }
 
+  // Chat automatically scrolls to the bottom when called
   function chatScroll() {
     var chat = document.getElementById('chatContainer');
     chat.scrollTop = chat.scrollHeight;
   }
 
+  // Sends a user message to the server
   function sendMessage() {
-    if ($('#messagebox').val() !== '') {
+    if ($('#messagebox').val().trim().length > 0) {
       var currentTime = new Date();
       var minuteDigits = (currentTime.getMinutes() < 10 ? '0' : '') + currentTime.getMinutes();
       var formatedDate = `${ currentTime.getDate() } ${ getMonthFromNumber(currentTime.getMonth()) } ${ currentTime.getFullYear() } - ${ currentTime.getHours() }:${ minuteDigits }`;
