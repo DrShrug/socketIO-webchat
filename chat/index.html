@@ -15,7 +15,7 @@
         <script id="message-template" type="text/template">
             <li class="chatMessage">
                 <div>
-                    <p class="author is-size-4">{{ author }}</p> 
+                    <p class="author is-size-4">{{ author }}</p>
                     <span class="timestamp has-text-grey">{{ timestamp }} </span>
                 </div>
                 <div>
@@ -64,13 +64,16 @@
                     </div>
                 </div>
             </div>
-            <div id="messageAreaContainer" class="container">
-                <div class="field">
-                    <p class="control is-expanded">
-                        <textarea id="messagebox" autocomplete="off" class="input is-primary" type="text" placeholder="Message"></textarea>
-                    </p>
+            <div id="messageArea">
+                <div id="messageAreaContainer" class="container">
+                    <div class="field">
+                        <p class="control is-expanded">
+                            <textarea id="messagebox" autocomplete="off" class="input is-primary" type="text" placeholder="Message"></textarea>
+                        </p>
+                    </div>
                 </div>
             </div>
+            
         </div>
     </body>
 </html>

@@ -35,9 +35,10 @@ $(function() {
   socket.on('send msg', function(msg) {
     // Prevents html injection and allows multiline messages
     var messageWithSpace = msg.message
-                            .replace('<', '&lt;')
-                            .replace('>', '&gt;')
-                            .split('&lt;br /&gt;').join('<br/>').split(' ').join('\xa0')
+                            .split('<').join('&lt;')
+                            .split('>').join('&gt;')
+                            .split('&lt;br /&gt;').join('<br/>')
+                            .split(' ').join('\xa0')
     var template = $("#message-template").html();
     var html = Mustache.render(template, {
       author: msg.author,
@@ -60,7 +61,6 @@ $(function() {
 
   // Socket receives a message stating that a user has joined
   socket.on('user joined', function (data) {
-    console.log(data)
     $("#messages").append(
       $('<li class="userJoinedMessage cleanUsername">')
         .text( data.username + ' has joined')

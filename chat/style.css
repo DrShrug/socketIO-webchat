@@ -70,8 +70,14 @@ body {
   height: 80%;
 }
 
-#messageAreaContainer {
-  margin-top: 30px;
+#messageArea {
+  width: 100%;
+  height: 15vh;
+  background-color:#202225;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .chatMessage {
@@ -92,5 +98,9 @@ body {
 }
 
 .author, .timestamp {
-  display: inline
+  display: inline;
+}
+
+.author {
+  margin-right: 5px;
 }
