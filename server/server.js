@@ -2,9 +2,10 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io').listen(http);
 
+const {Users} = require('./utils/users')
 const {generateMessage} = require('./utils/message');
 
-var connectedUsers = [];
+var users = new Users();
 const port = process.env.PORT || 80;
 
 app.use(require('express').static(__dirname + './../chat'));
@@ -14,14 +15,12 @@ io.on('connection', function(socket){
 
   socket.on('disconnect', function(){
     console.log('User disconnected');
-    if (socket.username !== undefined) {
-      socket.broadcast.emit('user left', {
-      username: socket.username });
-      if (connectedUsers.indexOf(socket.username) !== -1) {
-        connectedUsers.splice(connectedUsers.indexOf(socket.username), 1);
-      }
+
+    var user = users.removeUser(socket.id);
+    if (user) {
       updateUserList();
-    } 
+      io.emit('user left', user);
+    };
   });
 
   socket.on('send msg', function(msg) {
@@ -30,17 +29,14 @@ io.on('connection', function(socket){
   });
 
   socket.on('add user', function (username) {
-    socket.username = username;
-    connectedUsers.push(username);
+    var user = users.addUser(socket.id, username)
     updateUserList();
-    socket.broadcast.emit('user joined', {
-      username: socket.username,
-    });
+    io.emit('user joined', user);
   });
 });
     
 function updateUserList(){
-  io.emit('update', connectedUsers)
+  io.emit('update', users.getUserList());
 }
 
 http.listen(port, function(){

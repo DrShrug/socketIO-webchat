@@ -60,7 +60,7 @@ $(function() {
 
   // Socket receives a message stating that a user has joined
   socket.on('user joined', function (data) {
-
+    console.log(data)
     $("#messages").append(
       $('<li class="userJoinedMessage cleanUsername">')
         .text( data.username + ' has joined')
@@ -87,9 +87,9 @@ $(function() {
   // Sets the list of connected users
   function listConnectedUsers(){
     $("#userList").html('');
-    for(var i = 0; i < users.length; i++){
-      $("#userList").append($('<li class="connectedUser cleanUsername">').text(users[i]))
-    }
+    users.forEach((user) => {
+      $("#userList").append($('<li class="connectedUser cleanUsername">').text(user))
+    })
     $("#onlinecount").text(`Online - ${ users.length }`)
   }
 
