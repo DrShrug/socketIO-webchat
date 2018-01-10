@@ -86,3 +86,7 @@ body {
 .userJoinedMessage {
   color: #228B22;
 }
+
+.cleanUsername {
+  overflow: hidden;
+}

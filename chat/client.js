@@ -50,14 +50,14 @@ $(function() {
 
   // Socket receives a message stating that a user has joined
   socket.on('user joined', function (data) {
-    $("#messages").append($('<li class="userJoinedMessage">').text( data.username + ' has joined'));
+    $("#messages").append($('<li class="userJoinedMessage cleanUsername">').text( data.username + ' has joined'));
     listConnectedUsers();
     chatScroll();
   });
 
   // Socket receives a message stating that a user has left
   socket.on('user left', function (data) {
-    $("#messages").append($('<li class="userLeftMessage">').text( data.username + ' has disconnected'));
+    $("#messages").append($('<li class="userLeftMessage cleanUsername">').text( data.username + ' has disconnected'));
     listConnectedUsers();
     chatScroll();
   });
@@ -71,7 +71,7 @@ $(function() {
   function listConnectedUsers(){
     $("#userList").html('');
     for(var i = 0; i < users.length; i++){
-      $("#userList").append($('<li class="connectedUser">').text(users[i]))
+      $("#userList").append($('<li class="connectedUser cleanUsername">').text(users[i]))
     }
     $("#onlinecount").text(`Online - ${ users.length }`)
   }
