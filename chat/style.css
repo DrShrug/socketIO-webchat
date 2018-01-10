@@ -1,0 +1,84 @@
+body {
+  background-color:#202225;
+  height:100vh;
+}
+
+.whiteText {
+  color: white;
+}
+
+#usernameScreen {
+  height:100vh;
+  width:100wh;
+}
+
+.noDisplay {
+  display: none;
+}
+
+.connectedAsHeader {
+  background-color:#202225;
+  height:5vh;
+}
+
+#currentname {
+  color:#aaabad;
+  font-size:3vh
+}
+
+#app {
+  height: 80vh;
+}
+
+#chatSidebar {
+  background-color:#2f3136;
+}
+
+#chatContainerColumn {
+  background-color:whitesmoke;
+}
+
+#chatContainer {
+  background: transparent;
+  height:100%;
+  overflow-y:scroll;
+}
+
+#connectedUsersColumn {
+  background-color:#2f3136;
+}
+
+#connectedUsers {
+  background: transparent;
+  height: 100%;
+}
+
+#onlinecount {
+  color: #aaabad;
+}
+
+.connectedUser {
+  color: #aaabad;
+}
+
+#messagebox {
+  overflow: visible;
+  resize: none;
+  height: 80%;
+}
+
+#messageAreaContainer {
+  width:100%;
+}
+
+.chatMessage {
+  word-wrap: break-word;
+}
+
+.userLeftMessage {
+  color: #FF0000;
+}
+
+.userJoinedMessage {
+  color: #228B22;
+}

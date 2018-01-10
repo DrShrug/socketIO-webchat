@@ -7,16 +7,17 @@
         <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
+        <link rel="stylesheet" href="style.css">
         <script src="/socket.io/socket.io.js"></script>
         <script src="client.js"></script>
     </head>
-    <body style="background-color:#202225; height:100vh;">
+    <body>
         <!-- Username selection -->
-        <div id="usernameScreen" style="height:100vh; width:100wh">
+        <div id="usernameScreen">
             <div class="container has-text-centered">
-                <label class="label is-medium" style="color:white">Enter a username</label>
+                <label class="label is-medium whiteText">Enter a username</label>
                 <div class="field">
-                    <input class="input" type="text" id="usernameTextbox"/>
+                    <input class="input" maxlength="16" type="text" id="usernameTextbox"/>
                 </div>
                 <div class="field">
                     <button id="nameselected" class="button is-success">Go</button>
@@ -25,40 +26,37 @@
         </div>
 
         <!-- Chat section -->
-        <div id="chatSession" style="display:none">
-            <div class="has-text-centered" style="background-color:#202225; height:5vh;">
-                <p id="currentname" style="color:#aaabad; font-size:3vh"></p>
+        <div id="chatSession noDisplay">
+            <div class="has-text-centered connectedAsHeader">
+                <p id="currentname"></p>
             </div>
             <div id="app" class="columns is-gapless">
-                <div class="column is-2" style="background-color:#2f3136">
-                    
+                <div class="column is-2" id="chatSidebar">
+                    <!-- Side bar -->
                 </div>
-                <div class="column is-8" style="background-color:whitesmoke; height:85vh">
-                    <div id="chatContainer" class="box" style="background: transparent; height:100%; max-height:85vh; overflow-y:scroll">
-                        
-                        <ul id="messages" style="border-bottom:0">
+                <div class="column is-8 is-offset-2" id="chatContainerColumn">
+                    <div id="chatContainer" class="box">
+                        <ul id="messages">
                             <!-- Chat messages -->
                         </ul>            
                     </div>
                 </div>
-                <div class="column is-2" style="background-color:#2f3136;">
-                    <div id="connectedUsers" class="box" style="background-color:transparent; height:85vh">
-                    <h1 id="onlinecount" class="title" style="color: #aaabad"></h1>
+                <div id="connectedUsersColumn" class="column is-2">
+                    <div id="connectedUsers" class="box">
+                    <h1 id="onlinecount" class="title"></h1>
                         <ul id="userList">
                             <!-- Connected users -->
                         </ul> 
                     </div>
                 </div>
             </div>
-            <div class="container field has-addons has-addons-centered" style="width:100%;">
-                <p class="control is-expanded">
-                    <input id="m" autocomplete="off" class="input" type="text" placeholder="Message"/>
-                </p>
-                <p class="control">
-                    <button id="sendMSG" class="button is-primary">
-                        Send
-                    </button>
-                </p>
+            <div id="messageAreaContainer" class="container">
+                <div class="field">
+                    <p class="control is-expanded">
+                        <textarea id="messagebox" autocomplete="off" class="input is-primary" type="text" placeholder="Message"></textarea>
+                    </p>
+                </div>
+                
             </div>
         </div>
     </body>
