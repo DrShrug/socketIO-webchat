@@ -34,6 +34,9 @@ body {
   background-color:#2f3136;
 }
 
+#chatSession {
+  height: 100%;
+}
 #chatContainerColumn {
   background-color:whitesmoke;
 }
@@ -68,7 +71,7 @@ body {
 }
 
 #messageAreaContainer {
-  width:100%;
+  margin-top: 30px;
 }
 
 .chatMessage {
