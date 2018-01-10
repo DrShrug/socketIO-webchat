@@ -60,14 +60,21 @@ $(function() {
 
   // Socket receives a message stating that a user has joined
   socket.on('user joined', function (data) {
-    $("#messages").append($('<li class="userJoinedMessage cleanUsername">').text( data.username + ' has joined'));
+
+    $("#messages").append(
+      $('<li class="userJoinedMessage cleanUsername">')
+        .text( data.username + ' has joined')
+        .append('<hr class="dropdown-divider">'));
     listConnectedUsers();
     chatScroll();
   });
 
   // Socket receives a message stating that a user has left
   socket.on('user left', function (data) {
-    $("#messages").append($('<li class="userLeftMessage cleanUsername">').text( data.username + ' has disconnected'));
+    $("#messages").append(
+      $('<li class="userLeftMessage cleanUsername">')
+      .text( data.username + ' has disconnected')
+      .append('<hr class="dropdown-divider">'));
     listConnectedUsers();
     chatScroll();
   });
