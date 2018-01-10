@@ -2,11 +2,12 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io').listen(http);
 
+const {generateMessage} = require('./utils/message');
 
 var connectedUsers = [];
 const port = process.env.PORT || 80;
 
-app.use(require('express').static(__dirname + '/chat'));
+app.use(require('express').static(__dirname + './../chat'));
 
 io.on('connection', function(socket){
   console.log('User connected');
@@ -23,8 +24,9 @@ io.on('connection', function(socket){
     } 
   });
 
-  socket.on('send msg', function(msg){
-    io.emit('send msg', msg);
+  socket.on('send msg', function(msg) {
+    var generated = generateMessage(msg.author, msg.message);
+    io.emit('send msg', generated);
   });
 
   socket.on('add user', function (username) {

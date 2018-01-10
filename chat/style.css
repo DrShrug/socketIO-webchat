@@ -38,7 +38,7 @@ body {
   height: 100%;
 }
 #chatContainerColumn {
-  background-color:whitesmoke;
+  background-color:hsl(0, 0%, 96%);
 }
 
 #chatContainer {
@@ -77,7 +77,7 @@ body {
 .chatMessage {
   word-wrap: break-word;
   overflow: hidden;
-  white-space: pre-line;
+  margin: auto auto auto auto;
 }
 
 .userLeftMessage {
@@ -90,4 +90,8 @@ body {
 
 .cleanUsername {
   overflow: hidden;
+}
+
+.author, .timestamp {
+  display: inline
 }

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "SocketIO - Chat app",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server/server.js"
   },
   "engines": {
     "node": "9.3.0"

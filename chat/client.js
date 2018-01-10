@@ -4,7 +4,6 @@ $(function() {
 
   var $setname = $('#usernameScreen');
   var $chatPage = $('#chatSession'); 
-
   var username;
   var users = [];
 
@@ -29,21 +28,24 @@ $(function() {
   $("#usernameTextbox").keyup(function(event) {
     if ($(this).is(':focus'))
       if (event.keyCode === 13)
-        $("#nameselected").click();
+        setUsername();
   });
 
   // Socket receives new message and displays it
   socket.on('send msg', function(msg) {
-    // Allows < > around user name without converting it into an HTML element
-    var displayName = `<${ msg.author }>`.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    // Prevents html injection and allows multiple spaces in message
-    var messageWithSpace = msg.message.split('<br />').join('\n')
-                            .split(' ').join('\xa0')
-                            .replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    var messageLi = $("<li>", {"class": "chatMessage"});
-    messageLi.html(`[${ msg.timestamp }] ${ displayName } : ${ messageWithSpace }`)
-    $('#messages').append(messageLi);
+    // Prevents html injection and allows multiline messages
+    var messageWithSpace = msg.message
+                            .replace('<', '&lt;')
+                            .replace('>', '&gt;')
+                            .split('&lt;br /&gt;').join('<br/>').split(' ').join('\xa0')
+    var template = $("#message-template").html();
+    var html = Mustache.render(template, {
+      author: msg.author,
+      message: messageWithSpace,
+      timestamp: msg.formatedTime
+    });
 
+    $('#messages').append(html);
     chatScroll();
     if (!document.hasFocus() && username !== null) {
       document.title = '[New] Web Chat App'
@@ -105,22 +107,11 @@ $(function() {
   // Sends a user message to the server
   function sendMessage() {
     if ($('#messagebox').val().trim().length > 0) {
-      var currentTime = new Date();
-      var minuteDigits = (currentTime.getMinutes() < 10 ? '0' : '') + currentTime.getMinutes();
-      var formatedDate = `${ currentTime.getDate() } ${ getMonthFromNumber(currentTime.getMonth()) } ${ currentTime.getFullYear() } - ${ currentTime.getHours() }:${ minuteDigits }`;
-      var message = {
+      socket.emit('send msg', {
         author: username,
         message: $('#messagebox').val().substring(0, 500).replace(/\r?\n/g, '<br />'),
-        timestamp: formatedDate
-      }
-      socket.emit('send msg', message);
+      });
       $('#messagebox').val('');
     }
-  }
-
-  function getMonthFromNumber(month) {
-    var monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-    return monthNames[month];
   }
 })
