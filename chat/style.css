@@ -77,7 +77,6 @@ body {
 .chatMessage {
   word-wrap: break-word;
   overflow: hidden;
-  margin: auto auto auto auto;
 }
 
 .userLeftMessage {
