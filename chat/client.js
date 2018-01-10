@@ -37,7 +37,7 @@ $(function() {
   socket.on('send msg', function(msg) {
     $('#messages').append(`<li class="chatMessage">[${ msg.timestamp }] ${ msg.author } : ${ msg.message }</li>`);
     chatScroll();
-    if (!document.hasFocus()) {
+    if (!document.hasFocus() && username !== null) {
       document.title = 'Web chat [!]'
     }
   });
@@ -96,7 +96,8 @@ $(function() {
   function sendMessage() {
     if ($('#messagebox').val() !== '') {
       var currentTime = new Date();
-      var formatedDate = `${ currentTime.getDate() } ${ getMonthFromNumber(currentTime.getMonth()) } ${ currentTime.getFullYear() } - ${ currentTime.getHours() } : ${ currentTime.getMinutes() }`;
+      var minuteDigits = (currentTime.getMinutes() < 10 ? '0' : '') + currentTime.getMinutes();
+      var formatedDate = `${ currentTime.getDate() } ${ getMonthFromNumber(currentTime.getMonth()) } ${ currentTime.getFullYear() } - ${ currentTime.getHours() }:${ minuteDigits }`;
       var message = {
         author: username,
         message: $('#messagebox').val().substring(0, 240).replace(/\r?\n/g, '<br />'),

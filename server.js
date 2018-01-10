@@ -13,12 +13,14 @@ io.on('connection', function(socket){
 
   socket.on('disconnect', function(){
     console.log('User disconnected');
-    socket.broadcast.emit('user left', {
+    if (socket.username !== undefined) {
+      socket.broadcast.emit('user left', {
       username: socket.username });
-    if (connectedUsers.indexOf(socket.username) !== -1) {
-      connectedUsers.splice(connectedUsers.indexOf(socket.username), 1);
-    }
-    updateUserList();
+      if (connectedUsers.indexOf(socket.username) !== -1) {
+        connectedUsers.splice(connectedUsers.indexOf(socket.username), 1);
+      }
+      updateUserList();
+    } 
   });
 
   socket.on('send msg', function(msg){
