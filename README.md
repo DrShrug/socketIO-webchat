@@ -1,12 +1,7 @@
 # Chat
-Simple chat system created to test out Socket.io
+Simple chat system created to learn about Socket.io
 
-# To be implemented/fixed
-  - Fix the bug where a user will show up as undefined
-  - Fix the bug where the online count is inaccurate
+# Tasks to be done
+  - Improve readability
+  - Add commands (/afk)
 
-
-
-## Built With
-
-* [Socket.io](https://github.com/socketio/socket.io) 
