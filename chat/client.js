@@ -1,5 +1,4 @@
 $(function() {
-  var $window = $(window);
   var socket = io.connect();
 
   var $setname = $('#usernameScreen');
@@ -31,14 +30,15 @@ $(function() {
         setUsername();
   });
 
+  // Socket events
   // Socket receives new message and displays it
-  socket.on('send msg', function(msg) {
+  socket.on('new msg', function(msg) {
     // Prevents html injection and allows multiline messages
     var messageWithSpace = msg.message
                             .split('<').join('&lt;')
                             .split('>').join('&gt;')
                             .split('&lt;br /&gt;').join('<br/>')
-                            .split(' ').join('\xa0')
+                            .split(' ').join('\xa0');
     var template = $("#message-template").html();
     var html = Mustache.render(template, {
       author: msg.author,
@@ -48,13 +48,14 @@ $(function() {
 
     $('#messages').append(html);
     chatScroll();
+    // Changes page title if user is in another tab while receiving a new message
     if (!document.hasFocus() && username !== null) {
-      document.title = '[New] Web Chat App'
+      document.title = '[New] Web Chat App';
     }
   });
 
   // Socket receieve new array of connected user and displays it
-  socket.on('update', function (connectedUsers) {
+  socket.on('update users', function (connectedUsers) {
     users = connectedUsers;
     listConnectedUsers();
   });
@@ -62,7 +63,7 @@ $(function() {
   // Socket receives a message stating that a user has joined
   socket.on('user joined', function (data) {
     $("#messages").append(
-      $('<li class="userJoinedMessage cleanUsername">')
+      $('<li class="userJoinedMessage preventOverflow">')
         .text( data.username + ' has joined')
         .append('<hr class="dropdown-divider">'));
     listConnectedUsers();
@@ -72,13 +73,14 @@ $(function() {
   // Socket receives a message stating that a user has left
   socket.on('user left', function (data) {
     $("#messages").append(
-      $('<li class="userLeftMessage cleanUsername">')
+      $('<li class="userLeftMessage preventOverflow">')
       .text( data.username + ' has disconnected')
       .append('<hr class="dropdown-divider">'));
     listConnectedUsers();
     chatScroll();
   });
 
+  // Client side functions
   // Removes new message notification
   $(window).focus(function () {
     document.title = 'Web Chat App';
@@ -88,7 +90,7 @@ $(function() {
   function listConnectedUsers(){
     $("#userList").html('');
     users.forEach((user) => {
-      $("#userList").append($('<li class="connectedUser cleanUsername">').text(user))
+      $("#userList").append($('<li class="connectedUser preventOverflow">').text(user))
     })
     $("#onlinecount").text(`Online - ${ users.length }`)
   }
@@ -99,9 +101,9 @@ $(function() {
     if (username) {
       $setname.fadeOut();
       $chatPage.show();
-      $setname.off('click', 'keyup') //Removes click event from that page
-      $("#currentname").text("Currently chatting as : " + username)
-      socket.emit('add user', username)
+      $setname.off('click', 'keyup'); //Removes events from login page
+      $("#currentname").text("Currently chatting as : " + username);
+      socket.emit('add user', username);
     }
   }
 

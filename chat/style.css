@@ -93,7 +93,7 @@ body {
   color: #228B22;
 }
 
-.cleanUsername {
+.preventOverflow {
   overflow: hidden;
 }
 

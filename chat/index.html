@@ -3,23 +3,22 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Web chat</title>
         <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
         <link rel="stylesheet" href="style.css">
-        <script src="mustache.js"></script>
+        <script src="libs/mustache.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="client.js"></script>
-
+        <!-- Mustache message template, move this to its own file -->
         <script id="message-template" type="text/template">
             <li class="chatMessage">
                 <div>
-                    <p class="author is-size-4">{{ author }}</p>
+                    <p class="author preventOverflow is-size-4">{{ author }}</p>
                     <span class="timestamp has-text-grey">{{ timestamp }} </span>
                 </div>
                 <div>
-                    <p>{{{ message }}}</p>
+                    <p class="preventOverflow">{{{ message }}}</p>
                 </div>
             </li>
             <hr class="dropdown-divider">
@@ -64,6 +63,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Message textarea section -->
             <div id="messageArea">
                 <div id="messageAreaContainer" class="container">
                     <div class="field">
