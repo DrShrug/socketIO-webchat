@@ -1,8 +1,5 @@
 $(function() {
   var socket = io.connect();
-
-  var $setname = $('#usernameScreen');
-  var $chatPage = $('#chatSession'); 
   var username;
   var users = [];
 
@@ -99,9 +96,9 @@ $(function() {
   function setUsername() {
     username = $('#usernameTextbox').val().trim().substring(0, 16);
     if (username) {
-      $setname.fadeOut();
-      $chatPage.show();
-      $setname.off('click', 'keyup'); //Removes events from login page
+      $('#usernameScreen').fadeOut();
+      $('#chatSession').show();
+      $('#usernameScreen').off('click', 'keyup'); //Removes events from login page
       $("#currentname").text("Currently chatting as : " + username);
       socket.emit('add user', username);
     }
