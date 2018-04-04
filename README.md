@@ -1,7 +1,6 @@
 # Chat
 Simple chat system created to learn about Socket.io
 
-# Tasks to be done
-  - Improve readability
-  - Add commands (/afk)
+# How to run it
+Run `npm start` to boot up the chat server then go to `localhost` in your browser
 
